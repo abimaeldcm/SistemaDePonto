@@ -1,0 +1,31 @@
+﻿@model List<PontoModel>
+
+<h3 scope="col">Marcações de Ponto</h3>
+
+<table class="table table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Tipo</th>
+            <th scope="col">Horário</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model.GroupBy(x => x.Data))
+        {
+            <tr>
+                <td colspan="2" class="text-">
+                    <strong>@group.Key.ToString("dd/MM/yyyy")</strong>
+                </td>
+            </tr>
+            @foreach (var item in group)
+            {
+                <tr>
+                    <td>@item.TipoBatida</td>
+                    <td>@item.Hora.ToString("hh\\:mm\\:ss")</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

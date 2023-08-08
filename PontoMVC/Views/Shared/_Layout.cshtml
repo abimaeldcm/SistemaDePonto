@@ -1,0 +1,115 @@
+﻿@using PontoMVC.Models.Enums;
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - PontoMVC</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/PontoMVC.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PontoMVC</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="pontoDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Ponto
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="pontoDropdown">
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Ponto" asp-action="Index">Marcar Ponto</a></li>
+                                <li><a data-bs-toggle="modal" data-bs-target="#exampleModal"  class="dropdown-item text-dark" >Marcar Ponto</a></li>
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Abrir Meu Modal
+                                </button>
+                                <li><a class="dropdown-item text-dark" asp-area="" asp-controller="Ponto" asp-action="HistoricoMarcacao">Histórico de Marcações</a></li>
+                            </ul>                        
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- Modal 
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Marcação de Ponto</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">                        
+
+                        @if (TempData["MensagemErro"] != null)
+                        {
+                            @TempData["MensagemErro"]
+                        }
+
+                        <p>Usuario: (Nome)</p>
+                        <p>Data/ Hora da marcação: @DateTime.Now</p>
+
+                        <form asp-controller="Ponto" asp-action="Bater" method="post">
+                            <div class="form-group">
+                                <label for="nome">Tipo de Marcação: </label>
+                                <br />
+                                <select asp-for="TipoBatida" class="form-control" required data-val-required="Por favor, selecione um tipo de marcação">
+                                    <option value="">Selecione</option>
+                                    <option value="@ETipo.Entrada">Entrada</option>
+                                    <option value="@ETipo.AlmocoIda"> Almoço Ida</option>
+                                    <option value="@ETipo.AlmocoVolta"> Almoço Volta</option>
+                                    <option value="@ETipo.Saida">Saída</option>
+                                </select>   
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary btn-block">Gravar</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>-->
+    </header>
+
+    
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2023 - PontoMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <div id="modalPlaceholder"></div>
+    <script>
+        $(function () {
+            $('#exampleModal .modal-content').load('/Shared/_MeuModal', function () {
+                $('#exampleModal').modal('show');
+            });
+        });
+    </script>
+</body>
+</html>
