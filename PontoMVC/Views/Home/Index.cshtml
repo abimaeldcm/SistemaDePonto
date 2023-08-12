@@ -1,8 +1,25 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div id="myAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @TempData["MensagemSucesso"]
+    </div>
+}
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">MendesTech</h1>
+    <p>Bem-vindo ao sistema de marcação e gerenciamento de pontos.</p>
 </div>
+
+<script>
+    // Fechar o alerta após 3 segundos
+    setTimeout(function () {
+        var alert = document.getElementById('myAlert');
+        alert.classList.remove('show'); // Remove a classe 'show' para ativar a animação de fade
+        setTimeout(function () {
+            alert.remove(); // Remove completamente o elemento do DOM após a animação de fade
+        }, 500); // Tempo correspondente à duração da animação de fade definida no CSS
+    }, 5000); // 5 segundos
+</script>

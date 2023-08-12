@@ -1,0 +1,54 @@
+﻿@using PontoMVC.Models.Enums;
+@model UsuarioModel
+@{
+    ViewData["Title"] = "Editar Usuário";
+}
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h2>Editar Usuário</h2>
+    </div>
+
+    <form asp-controller="Usuario" asp-action="Editar" method="post">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" asp-for="Nome" class="form-control" placeholder="Digite o seu nome">
+            @Html.ValidationMessageFor(x => x.Nome)
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="text" asp-for="Email" class="form-control" placeholder="Digite o e-mail do usuário">
+            @Html.ValidationMessageFor(x => x.Email)
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Login</label>
+            <input type="text" asp-for="Login" class="form-control" placeholder="Digite o login do usuário">
+            @Html.ValidationMessageFor(x => x.Login)
+        </div>
+
+        <div class="form-group">
+            <label for="nome">Perfil</label>
+            <select asp-for="Perfil" class="form-control">
+                <option value="">Selecione</option>
+                <option value="@EPerfil.Adminstrador">Administrador</option>
+                <option value="@EPerfil.Padrao">Padrão</option>
+            </select>
+            @Html.ValidationMessageFor(x => x.Perfil)
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">Editar</button>
+            <a class="btn btn-secondary" asp-controller="Usuario" asp-action="Index" role="button">Voltar</a>
+        </div>
+    </form>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

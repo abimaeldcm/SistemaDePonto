@@ -1,14 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace PontoMVC.Models.Enums
 {
     public enum ETipo : int
     {
         Entrada = 1,
-        [Display(Name = "Almoço Ida")] 
-        AlmocoIda = 2,
-        [Display(Name = "Almoço Volta")]
-        AlmocoVolta = 3,
+        [Display(Name = "Pausa")]
+        Pausa = 2,
+        [Display(Name = "Retorno")]
+        Retorno = 3,
         Saida = 4,
     }
 }

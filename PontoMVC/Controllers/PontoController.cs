@@ -16,6 +16,12 @@ namespace PontoMVC.Controllers
             _pontoRepositorio = pontoRepositorio;
             _usuarioRepositorio = usuarioRepositorio;
         }
+        public IActionResult Index()
+        {
+            
+            return View("Index");
+        }
+
         [HttpPost]
         public IActionResult Bater(PontoModel ponto)
         {
@@ -29,6 +35,7 @@ namespace PontoMVC.Controllers
                 _pontoRepositorio.BaterPonto(ponto);
                 TempData["MensagemSucesso"] = "Marcação incluida com sucesso!";
             }
+
             return RedirectToAction("Index", "Home");                  
         }
 

@@ -1,4 +1,5 @@
-﻿@model List<PontoModel>
+﻿@using PontoMVC.Models.Enums;
+@model List<PontoModel>
 
 <h3 scope="col">Marcações de Ponto</h3>
 
@@ -15,7 +16,7 @@
         {
             <tr>
                 <td colspan="2" class="text-">
-                    <strong>@group.Key.ToString("dd/MM/yyyy")</strong>
+                    <strong>@group.Key.ToString(" dd/MM/yyyy, dddd")</strong>
                 </td>
             </tr>
             @foreach (var item in group)

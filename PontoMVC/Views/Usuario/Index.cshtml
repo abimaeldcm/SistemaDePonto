@@ -1,0 +1,64 @@
+﻿@using PontoMVC.Models.Enums;
+@model List<UsuarioModel>;
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div id="myAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @TempData["MensagemSucesso"]
+    </div>
+}
+
+<br />
+<a class="btn btn-primary" asp-action="TelaCriar" asp-controller="Usuario" role="button">Adicionar Usuário</a>
+<br />
+<br />
+
+<table id="table-usuarios" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model[0].Nome)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Login)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Perfil)</th>
+            <th>@Html.DisplayNameFor(model => model[0].Email)</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Nome</td>
+                    <td>@item.Login</td>
+                    <td>@item.Perfil</td>
+                    <td>@item.Email</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Ações
+                            </button>
+                            <ul class="dropdown-menu"> 
+                                <a class="dropdown-item" asp-action="TelaEditar" asp-controller="Usuario" asp-route-id="@item.Id">Editar</a>
+                                <a class="dropdown-item" asp-action="TelaApagar" asp-controller="Usuario" asp-route-id="@item.Id">Apagar</a>
+                                <a class="dropdown-item" asp-action="Detalhes" asp-controller="Usuario" asp-route-id="@item.Id">Info</a>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<script>
+    // Fechar o alerta após 3 segundos
+    setTimeout(function () {
+        var alert = document.getElementById('myAlert');
+        alert.classList.remove('show'); // Remove a classe 'show' para ativar a animação de fade
+        setTimeout(function () {
+            alert.remove(); // Remove completamente o elemento do DOM após a animação de fade
+        }, 500); // Tempo correspondente à duração da animação de fade definida no CSS
+    }, 5000); // 5 segundos
+</script>

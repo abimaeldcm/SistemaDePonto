@@ -1,0 +1,28 @@
+﻿@model UsuarioModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do Usuário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container text-center mt-5">
+        <div class="user-details">
+            <h2>Detalhes do Usuário</h2>
+            <p><strong>Nome:</strong> @Model.Nome</p>
+            <p><strong>Perfil:</strong> @Model.Perfil</p>
+            <p><strong>Login:</strong> @Model.Login</p>
+            <p><strong>Email:</strong> @Model.Email</p>
+            <p><strong>Cadastrado em:</strong> @Model.DataCadastro</p>
+            <p><strong>Dados alterados em:</strong> @Model.DataAtualização</p>
+        </div>
+        <div class="col-md-6 offset-md-3 mt-4">
+            <a class="btn btn-primary btn-block" asp-controller="Usuario" asp-action="Index" role="button">Voltar</a>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

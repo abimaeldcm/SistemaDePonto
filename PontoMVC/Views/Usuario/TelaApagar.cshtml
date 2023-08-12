@@ -1,0 +1,55 @@
+﻿@model UsuarioModel
+
+
+
+
+<head>
+    <title>Excluir Usuário</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="text-center">
+            <h2>Excluir Usuário</h2>
+            <p>Tem certeza que deseja excluir o seguinte usuário?</p>
+            <strong style="color: red;">
+                A exclusão do usuário resultará na exclusão das marcações associadas a ele.
+            </strong>
+        </div>
+
+        <form>
+            <input type="hidden" asp-for="Id" />
+
+            <div class="form-group">
+                <label for="nome">Nome do Usuário:</label>
+                <input type="text" asp-for="Nome" class="form-control" value=@Model.Nome readonly>
+                @Html.ValidationMessageFor(x => x.Nome)
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" asp-for="Email" class="form-control" value=@Model.Email readonly>
+                @Html.ValidationMessageFor(x => x.Email)                
+            </div>
+
+            <div class="form-group">
+                <label for="perfil">Perfil:</label>
+                <input type="text" asp-for="Perfil" class="form-control" value=@Model.Perfil readonly>
+                @Html.ValidationMessageFor(x => x.Perfil)
+            </div>
+
+            
+        </form>
+        <div class="row">
+            <div class="col-md-3">
+                <a asp-controller="Usuario" asp-action="Apagar" asp-route-id="@Model.Id" class="btn btn-danger btn-block">Confirmar Exclusão</a>
+            </div>
+            <div class="col-md-1">
+                <a class="btn btn-primary btn-block" asp-controller="Usuario" asp-action="Index" role="button">Voltar</a>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
