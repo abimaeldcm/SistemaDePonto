@@ -1,5 +1,38 @@
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using PontoMVC;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TESTSE;
+
+namespace PontoMVC
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            CreateHostBuilder(args).Build().Run();
+        }
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
+    }
+}
+
+
+
+
+/*using Microsoft.EntityFrameworkCore;
 using PontoMVC.Data;
+using PontoMVC.Helper;
 using PontoMVC.Repositorio;
 using System.Configuration;
 
@@ -19,7 +52,17 @@ namespace PontoMVC
                 .AddDbContext<BancoContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
             builder.Services.AddScoped<IPontoRepositorio, PontoRepositorio>();
+            builder.Services.AddScoped<ISessao, Sessao>();
             builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+
+
+            builder.Services.AddDistributedMemoryCache(); // Configuração da memória cache distribuída
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // Tempo limite de inatividade da sessão
+                options.Cookie.HttpOnly = true; // Somente acessível via HTTP
+                options.Cookie.IsEssential = true; // Cookie essencial
+            });
 
             var app = builder.Build();
 
@@ -38,6 +81,8 @@ namespace PontoMVC
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Login}/{action=Index}/{id?}");
@@ -45,4 +90,4 @@ namespace PontoMVC
             app.Run();
         }
     }
-}
+}*/
