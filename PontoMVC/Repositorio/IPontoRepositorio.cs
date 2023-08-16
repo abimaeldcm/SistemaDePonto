@@ -7,6 +7,6 @@ namespace PontoMVC.Repositorio
     {
         PontoModel BaterPonto(PontoModel bater);
         UsuarioModel Usuario();
-        IQueryable<PontoModel> Marcacoes();
+        IEnumerable<PontoModel> Marcacoes();
     }
 }

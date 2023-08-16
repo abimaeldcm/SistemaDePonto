@@ -19,6 +19,7 @@ namespace PontoMVC.Repositorio
             { 
                 usuario.DataCadastro = DateTime.Now;
                 usuario.DataAtualização = DateTime.Now;
+                usuario.Senha = "123456"; 
 
                 await _bancoContext.Usuarios.AddAsync(usuario);
                 await _bancoContext.SaveChangesAsync();

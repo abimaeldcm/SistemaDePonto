@@ -41,6 +41,7 @@ namespace PontoMVC.Controllers
 
         public IActionResult HistoricoMarcacao() 
         {
+
             List<PontoModel> marcacoes = _pontoRepositorio.Marcacoes().ToList(); ;
 
             return View(marcacoes);

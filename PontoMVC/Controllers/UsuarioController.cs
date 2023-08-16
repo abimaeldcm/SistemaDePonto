@@ -63,7 +63,7 @@ namespace PontoMVC.Controllers
         {
             if (await _usuarioRepositorio.Apagar(id))
             {
-                TempData["MensagemSucesso"] = "Marcação usuário excluído com sucesso!";
+                TempData["MensagemSucesso"] = "Usuário excluído com sucesso!";
             }
             else
             {
