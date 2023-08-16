@@ -27,7 +27,8 @@ namespace PontoMVC.Repositorio
         }
         public UsuarioModel Usuario()
         {
-            return _bancoContext.Usuarios.FirstOrDefault(x => x.Id == 1);
+            UsuarioModel usuario = _sessao.BuscarSessaoDoUsuario();
+            return _bancoContext.Usuarios.FirstOrDefault(x => x == usuario);
         }
 
         public IEnumerable<PontoModel> Marcacoes()

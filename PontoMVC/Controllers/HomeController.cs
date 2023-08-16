@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PontoMVC.Filters;
 using PontoMVC.Helper;
 using PontoMVC.Models;
 using System.Diagnostics;
 
 namespace PontoMVC.Controllers
 {
+    [PaginaUsuarioLogado]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -33,8 +35,18 @@ namespace PontoMVC.Controllers
         }
         public IActionResult Sair()
         {
-            _sessao.RemoverSessaoUsuario();
-            return RedirectToAction("Index","Login");
+            try
+            {
+                _sessao.RemoverSessaoUsuario();
+                return RedirectToAction("Index","Login");
+            }
+            catch (Exception erro)
+            {
+
+                TempData["MensagemErro"] = "Ops!! Não conseguimos realizar o Logoff! Destalhes:" + erro.Message;
+                return RedirectToAction("Index"); ;
+            }
+            
         }
     }
 }

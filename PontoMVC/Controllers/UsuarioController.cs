@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PontoMVC.Filters;
 using PontoMVC.Models;
 using PontoMVC.Repositorio;
 
 namespace PontoMVC.Controllers
 {
+    [PaginaUsuarioLogado]
     public class UsuarioController : Controller
     {
         private readonly IUsuarioRepositorio _usuarioRepositorio;
@@ -15,8 +17,27 @@ namespace PontoMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var usuarios = await _usuarioRepositorio.TodosUsuarios();
-            return View(usuarios);
+            try
+            {
+                var usuarios = await _usuarioRepositorio.TodosUsuarios();
+                if (usuarios.Any())
+                {
+                    return View(usuarios);
+                }
+                else
+                {
+                    TempData["MensagemErro"] = "Ops!! Não conseguimos localizar nenhum usuário! Adicione um usuário";
+                    return RedirectToAction("TelaCriar");
+                }               
+                
+            }
+            catch (Exception)
+            {
+
+                TempData["MensagemErro"] = "Ops!! Não conseguimos localizar nenhum usuário! Adicione um usuário";
+                return RedirectToAction("TelaCriar");
+            }
+            
         }
         
         public IActionResult TelaCriar()

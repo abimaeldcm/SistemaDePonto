@@ -19,6 +19,7 @@ namespace PontoMVC.Controllers
         {
             if (_session.BuscarSessaoDoUsuario() != null)
             {
+                TempData["MensagemSucesso"] = "Seja bem vindo! Você já está logado!";
                 return RedirectToAction("Index", "Home");
             }
 
