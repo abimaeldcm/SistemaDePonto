@@ -42,6 +42,7 @@
                             </button>
                             <ul class="dropdown-menu"> 
                                 <a class="dropdown-item" asp-action="TelaEditar" asp-controller="Usuario" asp-route-id="@item.Id">Editar</a>
+                                <a class="dropdown-item" asp-action="MarcacoesUsuario" asp-controller="Usuario" asp-route-id="@item.Id">Marcações</a>
                                 <a class="dropdown-item" asp-action="TelaApagar" asp-controller="Usuario" asp-route-id="@item.Id">Apagar</a>
                                 <a class="dropdown-item" asp-action="Detalhes" asp-controller="Usuario" asp-route-id="@item.Id">Info</a>
                             </ul>

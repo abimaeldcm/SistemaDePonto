@@ -9,8 +9,9 @@ namespace PontoMVC.Repositorio
         Task<List<UsuarioModel>> TodosUsuarios();
         Task<UsuarioModel> AlterarUsario(UsuarioModel usuario);
         Task<bool> Apagar(int id);
-        Task<UsuarioModel> BuscarPorEmail(string email);
+        UsuarioModel BuscarPorEmail(string email);
         Task<bool> AlterarSenha(UsuarioModel usuario);
-        Task<UsuarioModel> BuscarPorLoginSenha(LoginModel logar);
+        UsuarioModel BuscarPorLoginSenha(LoginModel logar);
+        List<PontoModel> MarcacoesId(int id);
     }
 }

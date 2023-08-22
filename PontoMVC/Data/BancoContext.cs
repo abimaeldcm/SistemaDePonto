@@ -7,7 +7,7 @@ namespace PontoMVC.Data
 {
     public class BancoContext : DbContext
     {
-        public BancoContext(DbContextOptions<BancoContext> options) 
+        public BancoContext(DbContextOptions<BancoContext> options)
             : base(options) //uma injeção diferente: options é um tipode DbContextOptions<BancoContext> e vai ser passado através do base para o banco de dados
         {
         }

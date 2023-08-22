@@ -1,18 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PontoMVC.Filters;
+using PontoMVC.Helper;
 using PontoMVC.Models;
 using PontoMVC.Repositorio;
 
 namespace PontoMVC.Controllers
 {
     [PaginaUsuarioLogado]
+    [PaginaUsuarioAdm]
     public class UsuarioController : Controller
     {
         private readonly IUsuarioRepositorio _usuarioRepositorio;
+        private readonly ISessao _sessao;
 
-        public UsuarioController(IUsuarioRepositorio usuarioRepositorio)
+        public UsuarioController(IUsuarioRepositorio usuarioRepositorio, ISessao sessao)
         {
             _usuarioRepositorio = usuarioRepositorio;
+            _sessao = sessao;
         }
 
         public async Task<IActionResult> Index()
@@ -21,7 +25,7 @@ namespace PontoMVC.Controllers
             {
                 var usuarios = await _usuarioRepositorio.TodosUsuarios();
                 if (usuarios.Any())
-                {
+                { 
                     return View(usuarios);
                 }
                 else
@@ -55,6 +59,11 @@ namespace PontoMVC.Controllers
             UsuarioModel usuario =  _usuarioRepositorio.UsuarioPorId(id);
             return View(usuario);
         }
+        public IActionResult MarcacoesUsuario(int id)
+        {
+            var Marcacoes =  _usuarioRepositorio.MarcacoesId(id);
+            return View(Marcacoes);
+        }
         [HttpPost]
         public async Task<IActionResult> Editar(UsuarioModel usuario)
         {
@@ -64,7 +73,7 @@ namespace PontoMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> AlterarSenha (string Email)
         {
-            UsuarioModel usuario = await _usuarioRepositorio.BuscarPorEmail(Email);
+            UsuarioModel usuario = _usuarioRepositorio.BuscarPorEmail(Email);
             await _usuarioRepositorio.AlterarSenha(usuario);
 
             return  RedirectToAction("Index", "Login");

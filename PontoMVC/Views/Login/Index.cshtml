@@ -18,6 +18,13 @@
         @TempData["MensagemErro"]
     </div>
 }
+@if (TempData["MensagemSucessoEnvio"] != null)
+{
+    <div id="myAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @TempData["MensagemSucessoEnvio"]
+    </div>
+}
 
 <body>
     <div class="container mt-5">
@@ -62,6 +69,6 @@
         setTimeout(function () {
             alert.remove(); // Remove completamente o elemento do DOM após a animação de fade
         }, 500); // Tempo correspondente à duração da animação de fade definida no CSS
-    }, 5000); // 5 segundos
+    }, 20000); // 20 segundos
 </script>
 </html>

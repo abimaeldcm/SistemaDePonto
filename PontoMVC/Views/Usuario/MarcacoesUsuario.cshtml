@@ -1,0 +1,37 @@
+﻿@model List<PontoModel>;
+
+@using PontoMVC.Models.Enums;
+
+<h3 scope="col">Marcações de Ponto</h3>
+
+<div class="col-md-1">
+    <a class="btn btn-primary btn-block" asp-controller="Usuario" asp-action="Index" role="button">Voltar</a>
+</div>
+
+<table class="table table-striped">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Tipo</th>
+            <th scope="col">Horário</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model.GroupBy(x => x.Data))
+        {
+            <tr>
+                <td colspan="2" class="text-">
+                    <strong>@group.Key.ToString(" dd/MM/yyyy, dddd")</strong>
+                </td>
+            </tr>
+            @foreach (var item in group)
+            {
+                <tr>
+                    <td>@item.TipoBatida</td>
+                    <td>@item.Hora.ToString("hh\\:mm\\:ss")</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+

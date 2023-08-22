@@ -2,6 +2,7 @@
 using PontoMVC.Data;
 using PontoMVC.Models;
 using PontoMVC.Models.Enums;
+using BCrypt.Net;
 
 namespace PontoMVC.Repositorio
 {
@@ -19,7 +20,7 @@ namespace PontoMVC.Repositorio
             { 
                 usuario.DataCadastro = DateTime.Now;
                 usuario.DataAtualização = DateTime.Now;
-                usuario.Senha = "123456"; 
+                usuario.Senha = BCrypt.Net.BCrypt.HashPassword("123456");
 
                 await _bancoContext.Usuarios.AddAsync(usuario);
                 await _bancoContext.SaveChangesAsync();
@@ -63,26 +64,43 @@ namespace PontoMVC.Repositorio
              await _bancoContext.SaveChangesAsync();
             return true;
         }
-        public async Task<UsuarioModel> BuscarPorEmail(string email)
+        public  UsuarioModel BuscarPorEmail(string email)
         {
-            UsuarioModel usuario = await _bancoContext.Usuarios.FirstOrDefaultAsync(e => e.Email == email);
-            return usuario;
-
+             return _bancoContext.Usuarios.FirstOrDefault(e => e.Email == email);
         }
 
         public async Task<bool> AlterarSenha(UsuarioModel usuario)
         {
             /*gerar a nova senha*/
-            usuario.Senha = "novaSenha";
+            usuario.Senha = BCrypt.Net.BCrypt.HashPassword("1");
             _bancoContext.Usuarios.Update(usuario);
             await _bancoContext.SaveChangesAsync();
 
             return true;
         }
-
-        public async Task<UsuarioModel> BuscarPorLoginSenha(LoginModel logar)
+        public List<PontoModel> MarcacoesId(int id)
         {
-            var usuarioDB = await _bancoContext.Usuarios.FirstOrDefaultAsync(x => x.Login == logar.Login && x.Senha == logar.Senha);
+            var MarcaçõesDB = _bancoContext.Pontos.Where(x => x.Usuario.Id == id).ToList();
+
+            return MarcaçõesDB;
+        }
+
+        public  UsuarioModel BuscarPorLoginSenha(LoginModel logar)
+        {
+            var usuarioDB =  _bancoContext.Usuarios.FirstOrDefault(x => x.Login == logar.Login);
+
+           /*if (usuarioDB != null)
+            {
+                bool senhaCorreta = BCrypt.Net.BCrypt.Verify(logar.Senha, usuarioDB.Senha);
+
+                if (senhaCorreta)
+                {
+                    // Senha correta, retornar o usuário ou fazer outras ações de login.
+                    return usuarioDB;
+                }
+            }*/
+
+            // Usuário não encontrado ou senha incorreta.
             return usuarioDB;
         }
     }
