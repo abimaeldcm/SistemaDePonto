@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using PontoMVC.Helper;
 using PontoMVC.Models;
 using PontoMVC.Repositorio;
@@ -10,14 +11,21 @@ namespace PontoMVC.Controllers
         private readonly IUsuarioRepositorio _usuarioRepositorio;
         private readonly ISessao _session;
         private readonly IUsuarioLoginRepositorio _usuarioLoginRepositorio;
+        private readonly IEmailService  _emailService;
+        private readonly VerificadorCodigoService   _VerificadorDeCodigoService;
 
 
 
-        public LoginController(IUsuarioRepositorio usuarioRepositorio, ISessao session, IUsuarioLoginRepositorio usuarioLoginRepositorio)
+
+        public LoginController(IUsuarioRepositorio usuarioRepositorio, ISessao session, 
+                                IUsuarioLoginRepositorio usuarioLoginRepositorio, 
+                                IEmailService emailService, VerificadorCodigoService verificadorCodigoService)
         {
             _usuarioRepositorio = usuarioRepositorio;
             _session = session;
             _usuarioLoginRepositorio = usuarioLoginRepositorio;
+            _emailService = emailService;
+            _VerificadorDeCodigoService = verificadorCodigoService;
         }
         public IActionResult Index()
         {
@@ -63,32 +71,84 @@ namespace PontoMVC.Controllers
         {
             return View();
             
-        }        
-        public IActionResult PrimeiroLoginSenha(string email)
+        }
+        [HttpPost]
+        public IActionResult PrimeiroLogin(string email)
         {
             var usuarioExiste = _usuarioRepositorio.BuscarPorEmail(email);
             if (usuarioExiste != null)
             {
-                _usuarioLoginRepositorio.CriarSenha(email);
-                TempData["MensagemSucessoEnvio"] = "Encaminhamos para o e-mail informado uma nova senha. Após entrar no sistema, acessa a página de alterar senha para colocar uma senha nova.";
-                return View("Index");
+                int codigo = _VerificadorDeCodigoService.GerarCodigo();
+
+                _emailService.SendEmailAsync(email, 
+                    "Código de Recuperação", 
+                $"Seu código de recuperação é: {codigo} \n Código válido por 10 minutos." );
+
+                _VerificadorDeCodigoService.GuardarEmailCache(email);
+
+                TempData["MensagemSucessoEnvio"] = "Encaminhamos um código de recuperação para o seu e-mail";
+                return RedirectToAction("ConfirmacaoCodigo");
             }
             else 
             {
-                TempData["MensagemErro"] = "Não encontramos o e-mail informado. Verifique as informações ou entre em contato com o seu administrador.";
+                TempData["MensagemEmailNaoEncontrado"] = "Não encontramos o e-mail informado. Verifique as informações ou entre em contato com o seu administrador.";
                 return View("PrimeiroLogin"); 
             }
             
         }
-        public IActionResult Recuperacao()
+        public IActionResult ConfirmacaoCodigo()
         {
 
             return View();
         }
-        
-        public IActionResult ValidacaoSenha()
+        [HttpPost]
+        public IActionResult ConfirmacaoCodigo(string codigo)
         {
+            var codigoIgual = _VerificadorDeCodigoService.ValidarCodigoEnviado(codigo);
+
+            if (codigoIgual)
+            {
+                return RedirectToAction("AlterarSenha");
+            }
+
+            TempData["CodigoIncorreto"] = "O código informado não corresponde ao enviado para o seu e-mail. Tente novamente.";
+
             return View();
         }
+        
+        public IActionResult AlterarSenha()
+        {
+
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AlterarSenha(string NovaSenha, string ConfirmarNovaSenha)
+        {
+            if (NovaSenha != ConfirmarNovaSenha)
+            {
+                ModelState.AddModelError("ConfirmarNovaSenha", "As senhas não correspondem.");
+                return View();
+            }
+
+            var email = _VerificadorDeCodigoService.RecuperarEmailCache();
+
+            if(email == null)
+            {
+                //colocar a excessão aqui
+                return View();
+            }
+
+            UsuarioModel Usuario = _usuarioRepositorio.BuscarPorEmail(email);
+            Usuario.Senha = NovaSenha;
+
+            _usuarioRepositorio.AlterarSenha(Usuario);
+
+            TempData["SenhaAlterada"] = "Sua senha foi alterada com sucesso!";
+
+            return RedirectToAction("Index", "Login");
+        }
+
+        
+
     }
 }

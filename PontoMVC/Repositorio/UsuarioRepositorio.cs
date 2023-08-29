@@ -72,7 +72,6 @@ namespace PontoMVC.Repositorio
         public async Task<bool> AlterarSenha(UsuarioModel usuario)
         {
             /*gerar a nova senha*/
-            usuario.Senha = BCrypt.Net.BCrypt.HashPassword("1");
             _bancoContext.Usuarios.Update(usuario);
             await _bancoContext.SaveChangesAsync();
 
@@ -87,18 +86,12 @@ namespace PontoMVC.Repositorio
 
         public  UsuarioModel BuscarPorLoginSenha(LoginModel logar)
         {
-            var usuarioDB =  _bancoContext.Usuarios.FirstOrDefault(x => x.Login == logar.Login);
+            var usuarioDB =  _bancoContext.Usuarios.FirstOrDefault(x => x.Login == logar.Login && x.Senha == logar.Senha);
 
-           /*if (usuarioDB != null)
+            if (usuarioDB != null)
             {
-                bool senhaCorreta = BCrypt.Net.BCrypt.Verify(logar.Senha, usuarioDB.Senha);
-
-                if (senhaCorreta)
-                {
-                    // Senha correta, retornar o usuário ou fazer outras ações de login.
-                    return usuarioDB;
-                }
-            }*/
+                return usuarioDB;
+            }
 
             // Usuário não encontrado ou senha incorreta.
             return usuarioDB;

@@ -3,11 +3,19 @@
     Layout = "_LayoutDeslogado";
 }
 
-@if (TempData["MensagemEmailNaoEncontrado"] != null)
+@if (TempData["MensagemSucessoEnvio"] != null)
 {
     <div id="myAlert" class="alert alert-success alert-dismissible fade show" role="alert">
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        @TempData["MensagemEmailNaoEncontrado"]
+        @TempData["MensagemSucessoEnvio"]
+    </div>
+}
+
+@if (TempData["CodigoIncorreto"] != null)
+{
+    <div id="myAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        @TempData["CodigoIncorreto"]
     </div>
 }
 
@@ -25,15 +33,14 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header text-center">
-                        Primeiro Login
+                        Validação de Código
                     </div>
                     <div class="card-body">
-                        <p class="text-center">Digite o e-mail que você informou em seu cadastro.</p>
-                        <p class="text-center">Iremos enviar uma senha</p>
-                        <form asp-controller="Login" asp-action="PrimeiroLogin" method="post">
+                        <p class="text-center">Informe o código que chegou no e-mail cadastrado</p>
+                        <form asp-controller="Login" asp-action="ConfirmacaoCodigo" method="post">
                             <div class="form-group">
-                                <label for="email">E-mail</label>
-                                <input type="email" class="form-control" id="email" name="email" asp-for="Email" required data-val-required="Por favor, digite o seu e-mail" placeholder="Digite seu E-mail">
+                                <label for="code">Código</label>
+                                <input type="text" class="form-control" name="codigo" required data-val-required="Por favor, digite o código" placeholder="Digite código">
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Enviar</button>
                         </form>

@@ -39,6 +39,7 @@ namespace PontoMVC
             services.AddScoped<ISessao, Sessao>();
             services.AddScoped<IEmailService, EmailService>();
             services.AddScoped<IUsuarioLoginRepositorio, UsuarioLoginRepositorio>();
+            services.AddScoped< VerificadorCodigoService> ();
 
 
             services.AddSession(o =>
