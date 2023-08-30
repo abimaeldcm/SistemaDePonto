@@ -42,11 +42,11 @@
                                 @Html.ValidationMessageFor(x => x.Login)
                             </div>
                             <div class="form-group">
-                                <label for="senha">Senha <i class="bi bi-info-circle" data-toggle="tooltip" title="Digite sua senha aqui"></i></label>
+                                <label for="senha">Senha</label>
                                 <div class="input-group">
                                     <input type="password" class="form-control" asp-for="Senha" id="senha" required data-val-required="Por favor, digite a sua senha" placeholder="Digite sua senha">
                                     <button type="button" id="toggleSenha" class="btn btn-secondary input-group-text" aria-label="Toggle Password Visibility">
-                                        <i class="bi bi-eye"></i>
+                                        <i class="bi bi-eye">&#9673;</i>
                                     </button>
                                 </div>
                                 @Html.ValidationMessageFor(x => x.Senha)
