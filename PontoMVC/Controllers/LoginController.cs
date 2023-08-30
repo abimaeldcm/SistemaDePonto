@@ -139,7 +139,7 @@ namespace PontoMVC.Controllers
             }
 
             UsuarioModel Usuario = _usuarioRepositorio.BuscarPorEmail(email);
-            Usuario.Senha = NovaSenha;
+            Usuario.Senha = BCrypt.Net.BCrypt.HashPassword(NovaSenha);
 
             _usuarioRepositorio.AlterarSenha(Usuario);
 

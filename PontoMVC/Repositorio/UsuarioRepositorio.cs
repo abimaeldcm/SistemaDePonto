@@ -16,6 +16,7 @@ namespace PontoMVC.Repositorio
         }
         public async Task<bool> Criar(UsuarioModel usuario)
         {
+            //não pode ter o mesmo login no banco
             if (usuario != null) 
             { 
                 usuario.DataCadastro = DateTime.Now;
@@ -86,15 +87,17 @@ namespace PontoMVC.Repositorio
 
         public  UsuarioModel BuscarPorLoginSenha(LoginModel logar)
         {
-            var usuarioDB =  _bancoContext.Usuarios.FirstOrDefault(x => x.Login == logar.Login && x.Senha == logar.Senha);
+            var usuarioDB =  _bancoContext.Usuarios.FirstOrDefault(x => x.Login == logar.Login);
 
-            if (usuarioDB != null)
+            var igual = BCrypt.Net.BCrypt.Verify(logar.Senha, usuarioDB.Senha);
+
+            if (igual)
             {
                 return usuarioDB;
             }
 
             // Usuário não encontrado ou senha incorreta.
-            return usuarioDB;
+            return null;
         }
     }
 }

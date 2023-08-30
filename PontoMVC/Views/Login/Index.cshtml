@@ -42,8 +42,13 @@
                                 @Html.ValidationMessageFor(x => x.Login)
                             </div>
                             <div class="form-group">
-                                <label for="senha">Senha</label>
-                                <input type="password" class="form-control" asp-for="Senha" id="senha" required data-val-required="Por favor, digite o seu e-mail" placeholder="Digite sua senha">
+                                <label for="senha">Senha <i class="bi bi-info-circle" data-toggle="tooltip" title="Digite sua senha aqui"></i></label>
+                                <div class="input-group">
+                                    <input type="password" class="form-control" asp-for="Senha" id="senha" required data-val-required="Por favor, digite a sua senha" placeholder="Digite sua senha">
+                                    <button type="button" id="toggleSenha" class="btn btn-secondary input-group-text" aria-label="Toggle Password Visibility">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
                                 @Html.ValidationMessageFor(x => x.Senha)
                             </div>
                             <button type="submit" class="btn btn-primary btn-block">Entrar</button>                            
@@ -72,3 +77,26 @@
     }, 20000); // 20 segundos
 </script>
 </html>
+
+<script>
+    function togglePasswordVisibility() {
+        var senhaInput = document.getElementById('senha');
+        var toggleButton = document.getElementById('toggleSenha');
+        var eyeIcon = document.getElementById('eyeIcon');
+
+        if (senhaInput.type === 'password') {
+            senhaInput.type = 'text';
+            eyeIcon.classList.remove('bi-eye');
+            eyeIcon.classList.add('bi-eye-slash');
+            toggleButton.setAttribute('aria-label', 'Toggle Password Visibility (Hidden)');
+        } else {
+            senhaInput.type = 'password';
+            eyeIcon.classList.remove('bi-eye-slash');
+            eyeIcon.classList.add('bi-eye');
+            toggleButton.setAttribute('aria-label', 'Toggle Password Visibility');
+        }
+    }
+
+    var toggleButton = document.getElementById('toggleSenha');
+    toggleButton.addEventListener('click', togglePasswordVisibility);
+</script>
