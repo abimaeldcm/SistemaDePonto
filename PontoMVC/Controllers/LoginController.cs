@@ -14,9 +14,6 @@ namespace PontoMVC.Controllers
         private readonly IEmailService  _emailService;
         private readonly VerificadorCodigoService   _VerificadorDeCodigoService;
 
-
-
-
         public LoginController(IUsuarioRepositorio usuarioRepositorio, ISessao session, 
                                 IUsuarioLoginRepositorio usuarioLoginRepositorio, 
                                 IEmailService emailService, VerificadorCodigoService verificadorCodigoService)
@@ -67,6 +64,11 @@ namespace PontoMVC.Controllers
                 return View("Index");
             }
         }
+        public IActionResult EsqueciSenha()
+        {
+            return View("PrimeiroLogin");
+        }
+
         public IActionResult PrimeiroLogin()
         {
             return View();

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PontoMVC.Data;
 
@@ -11,9 +12,10 @@ using PontoMVC.Data;
 namespace PontoMVC.Migrations
 {
     [DbContext(typeof(BancoContext))]
-    partial class BancoContextModelSnapshot : ModelSnapshot
+    [Migration("20230926212536_EntradaESaida")]
+    partial class EntradaESaida
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,11 +69,11 @@ namespace PontoMVC.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("FimJornada")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("FimJornada")
+                        .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("InicioJornada")
-                        .HasColumnType("time");
+                    b.Property<DateTime>("InicioJornada")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Login")
                         .IsRequired()

@@ -31,9 +31,17 @@
         <div class="form-group">
             <label for="Email">E-mail</label>
             <input type="email" asp-for="Email" class="form-control" placeholder="Digite o e-mail do usuário">
+        </div> 
+        <div class="form-group" style="display: inline-block; margin-right: 10px;">
+            <label for="InicioJornada">Início da jornada</label>
+            <input type="time" asp-for="InicioJornada" class="form-control" placeholder="Início da jornada">
         </div>
 
-        
+        <div class="form-group" style="display: inline-block;">
+            <label for="FimJornada">Fim da jornada</label>
+            <input type="time" asp-for="FimJornada" class="form-control" placeholder="Fim da jornada">
+        </div>
+
 
         <div class="form-row">
             <div class="form-group col-md-4">

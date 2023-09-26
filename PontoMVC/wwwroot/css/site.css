@@ -16,3 +16,9 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.user-photo {
+    width: 30px; /* Defina o tamanho desejado */
+    height: 30px;
+    border-radius: 50%; /* Para criar uma imagem redonda, se desejado */
+}

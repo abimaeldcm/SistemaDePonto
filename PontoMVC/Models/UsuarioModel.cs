@@ -18,7 +18,12 @@ namespace PontoMVC.Models
         [Display(Name = "E-mail")]
         public string Email { get; set; }
         public string Senha { get; set; }
+        public TimeSpan InicioJornada { get; set; }
+        public TimeSpan FimJornada { get; set; }        
         public DateTime DataCadastro { get; set; }
         public DateTime DataAtualização { get; set; }
+
     }
+
+
 }
